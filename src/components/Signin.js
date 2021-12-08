@@ -1,20 +1,17 @@
 import React from "react";
-import firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app/';
+import 'firebase/compat/auth';
 
 function Signin() {
   function doSignUp(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(function () {
-        console.log("successfully signed up!");
-      })
-      .catch(function (error) {
-        console.log(error.message);
-      });
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+      console.log("successfully signed up!");
+    }).catch(function(error) {
+      console.log(error.message);
+    });
   }
   function doSignIn(event) {
     event.preventDefault();
@@ -26,36 +23,44 @@ function Signin() {
       console.log(error.message);
     });
   }
-
-  function doSignOut() {
+  function doSignOut(event) {
     firebase.auth().signOut().then(function() {
-      console.log("Successfully signed out!");
+      console.log("successfully signed out!");
     }).catch(function(error) {
       console.log(error.message);
-    });
+    })
   }
-  
 
   return (
     <React.Fragment>
       <h1>Sign up</h1>
       <form onSubmit={doSignUp}>
-        <input type="text" name="email" placeholder="email" />
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit">Sign up</button>
+        <input 
+          type='text'
+          name='email'
+          placeholder='email' />
+        <input 
+          type='password'
+          name='password'
+          placeholder='password' />
+        <button type='submit'>Sign Up</button>
       </form>
-
       <h1>Sign In</h1>
       <form onSubmit={doSignIn}>
-        <input type="text" name="signinEmail" placeholder="email" />
-        <input type="password" name="signinPassword" placeholder="Password" />
-        <button type="submit">Sign in</button>
+        <input 
+          type='text'
+          name='signinEmail'
+          placeholder='email' />
+        <input
+          type='password'
+          name='signinPassword'
+          placeholder='Password' />
+        <button type='submit'>Sign in</button>
       </form>
-
       <h1>Sign Out</h1>
       <button onClick={doSignOut}>Sign out</button>
     </React.Fragment>
-  );
+  )
 }
 
-export default Signin;
+export default Signin
